@@ -17,8 +17,8 @@ function [y_pdf, y_cdf, y_poe] = med_predictor(mmodel, x)
 % Last update August 05, 2021
 % MATLAB version R2020b
 
-x_LB = mmodel.x_LB;
-x_UB = mmodel.x_UB;
+xLB = mmodel.xLB;
+xUB = mmodel.xUB;
 lambda0 = mmodel.lambda0;
 lambda = mmodel.lambda;
 alpha = mmodel.alpha;
@@ -37,9 +37,9 @@ f_PDF = @(x) exp(-(lambda0+sumSeries(x-b)));
 f_CDF = @(x) integral(f_PDF,b,x);
 f_POE = @(x) integral(f_PDF,x,interUB);
 
-xN = (x-x_LB)./(x_UB-x_LB);
+xN = (x-xLB)./(xUB-xLB);
 for k = 1:nP
-    y_pdf(k) = f_PDF(xN(k))./(x_UB-x_LB);
+    y_pdf(k) = f_PDF(xN(k))./(xUB-xLB);
     y_cdf(k) = f_CDF(xN(k));
     y_poe(k) = f_POE(xN(k));
 end

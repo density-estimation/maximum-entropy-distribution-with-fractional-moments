@@ -1,12 +1,12 @@
 function [fitnessBest, popBest, fitnessCurrentBest_GA,popCurrentBest_GA] = ...
-    ga(cost, sInitial,UB,LB, popSize, maxGeneration, selectionMethod, ...
-    pCrossover, nElitism, numV, absTol, stallGeneration, imagineY)
+    ga(cost, numV, sInitial,UB,LB, popSize, maxGeneration, selectionMethod, ...
+    pCrossover, nElitism,  absTol, stallGeneration)
 %This RealGA is a minimization problem
 %%Initialization of popultion and fitnessvalue
 %Intial value of different patition
 
 % xiaodong.zhang@u.nus.edu
-% Last update August 05, 2021
+% Last update Jan 1, 2022
 % MATLAB version R2020b
 %--------------------------------------------------------------------------------
 popChildren = zeros(popSize-nElitism,numV);
@@ -63,14 +63,10 @@ while flag1 && flag2
     fitnessBest = fitnessCurrentBest_GA(countG);
     
     flag1 =  countG < maxGeneration;
-    if countG <= stallGeneration || fitnessCurrentBest_GA(countG)==imagineY
+    if countG <= stallGeneration 
         flag2 = 1;
     else
-        if countG > 500 && fitnessCurrentBest_GA(countG)==imagineY
-            flag2 = 0;
-        else
-            flag2 = abs(fitnessCurrentBest_GA(countG)-fitnessCurrentBest_GA(countG-stallGeneration)) > absTol;
-        end
+        flag2 = abs(fitnessCurrentBest_GA(countG)-fitnessCurrentBest_GA(countG-stallGeneration)) > absTol;
     end
     countG = countG+1;
 end
